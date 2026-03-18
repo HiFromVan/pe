@@ -15,26 +15,55 @@
 //!
 //! ## Mathematical Solution
 //!
-//! TODO
+//! The Fibonacci sequence has a repeating parity pattern: odd, odd, even, odd, odd, even, ...
+//! So every 3rd term is even. The even-indexed Fibonacci numbers satisfy their own recurrence:
+//!
+//! $$E_n = 4 E_{n-1} + E_{n-2}, \quad E_1 = 2,\ E_2 = 8$$
+//!
+//! This lets us iterate only over even Fibonacci numbers directly, skipping 2/3 of the work.
 //!
 //! ## Complexity
 //!
-//! - Time: $O(?)$
-//! - Space: $O(?)$
+//! - `solve2` (brute force): Time $O(\log \text{limit})$, Space $O(1)$
+//! - `solve`  (math):        Time $O(\log \text{limit})$, Space $O(1)$, ~3× fewer iterations
 //!
 //! ## Example
 //!
 //! ```rust
-//! # fn solve(limit: u64) -> u64 {
-//! #     todo!()
-//! # }
+//! # fn solve(limit: u64) -> u64 { todo!() }
 //! // Even Fibonacci terms below 10: 2, 8 → sum = 10
 //! assert_eq!(solve(10), 10);
 //! ```
 
-/// Solve Problem 2
+/// Brute force: iterate all Fibonacci numbers, filter even ones.
+///
+/// - Time: $O(\log \text{limit})$
+/// - Space: $O(1)$
+#[allow(dead_code)]
+fn solve2(limit: u64) -> u64 {
+    let (mut a, mut b) = (1u64, 2u64);
+    let mut sum = 0;
+    while a <= limit {
+        if a % 2 == 0 {
+            sum += a;
+        }
+        (a, b) = (b, a + b);
+    }
+    sum
+}
+
+/// Math: use the even-only recurrence E(n) = 4·E(n-1) + E(n-2).
+///
+/// - Time: $O(\log \text{limit})$
+/// - Space: $O(1)$
 fn solve(limit: u64) -> u64 {
-    todo!()
+    let (mut a, mut b) = (2u64, 8u64);
+    let mut sum = 0;
+    while a <= limit {
+        sum += a;
+        (a, b) = (b, 4 * b + a);
+    }
+    sum
 }
 
 fn main() {
@@ -48,12 +77,13 @@ mod tests {
 
     #[test]
     fn test_example() {
-        // Even Fibonacci terms below 10: 2, 8 → sum = 10
         assert_eq!(solve(10), 10);
+        assert_eq!(solve2(10), 10);
     }
 
     #[test]
     fn test_answer() {
         assert_eq!(solve(4_000_000), 4613732);
+        assert_eq!(solve2(4_000_000), 4613732);
     }
 }
