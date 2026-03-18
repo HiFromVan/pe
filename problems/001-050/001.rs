@@ -22,7 +22,7 @@
 //!
 //! Expanding this:
 //!
-//! $$ S = \underbrace{\frac{3 \cdot \lfloor \frac{999}{3} \rfloor (1 + \lfloor \frac{999}{3} \rfloor)}{2}}_{3 \text{的倍数之和}} + \underbrace{\frac{5 \cdot \lfloor \frac{999}{5} \rfloor (1 + \lfloor \frac{999}{5} \rfloor)}{2}}_{5 \text{的倍数之和}} - \underbrace{\frac{15 \cdot \lfloor \frac{999}{15} \rfloor (1 + \lfloor \frac{999}{15} \rfloor)}{2}}_{15 \text{的倍数之和}} $$
+//! $$ S = \underbrace{\frac{3 \cdot \lfloor \frac{999}{3} \rfloor (1 + \lfloor \frac{999}{3} \rfloor)}{2}}_{3\text{的倍数之和}} + \underbrace{\frac{5 \cdot \lfloor \frac{999}{5} \rfloor (1 + \lfloor \frac{999}{5} \rfloor)}{2}}_{5\text{的倍数之和}} - \underbrace{\frac{15 \cdot \lfloor \frac{999}{15} \rfloor (1 + \lfloor \frac{999}{15} \rfloor)}{2}}_{15\text{的倍数之和}} $$
 //!
 //! ## Complexity
 //!
@@ -43,13 +43,13 @@
 //! ```
 
 /// Calculate the sum of multiples of k below or equal to limit
-fn sum_multiples(k: u64, limit: u64) -> u64 {
+pub fn sum_multiples(k: u64, limit: u64) -> u64 {
     let n = limit / k;
     k * n * (n + 1) / 2
 }
 
 /// Solve Problem 1
-fn solve(limit: u64) -> u64 {
+pub fn solve(limit: u64) -> u64 {
     sum_multiples(3, limit) + sum_multiples(5, limit) - sum_multiples(15, limit)
 }
 

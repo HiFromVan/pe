@@ -40,7 +40,7 @@
 /// - Time: $O(\log \text{limit})$
 /// - Space: $O(1)$
 #[allow(dead_code)]
-fn solve2(limit: u64) -> u64 {
+pub fn solve2(limit: u64) -> u64 {
     let (mut a, mut b) = (1u64, 2u64);
     let mut sum = 0;
     while a <= limit {
@@ -56,7 +56,7 @@ fn solve2(limit: u64) -> u64 {
 ///
 /// - Time: $O(\log \text{limit})$
 /// - Space: $O(1)$
-fn solve(limit: u64) -> u64 {
+pub fn solve(limit: u64) -> u64 {
     let (mut a, mut b) = (2u64, 8u64);
     let mut sum = 0;
     while a <= limit {
