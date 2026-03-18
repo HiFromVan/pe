@@ -26,21 +26,9 @@
 //!
 //! - `solve2` (brute force): Time $O(\log \text{limit})$, Space $O(1)$
 //! - `solve`  (math):        Time $O(\log \text{limit})$, Space $O(1)$, ~3× fewer iterations
-//!
-//! ## Example
-//!
-//! ```rust
-//! # fn solve(limit: u64) -> u64 { todo!() }
-//! // Even Fibonacci terms below 10: 2, 8 → sum = 10
-//! assert_eq!(solve(10), 10);
-//! ```
 
-/// Brute force: iterate all Fibonacci numbers, filter even ones.
-///
-/// - Time: $O(\log \text{limit})$
-/// - Space: $O(1)$
 #[allow(dead_code)]
-pub fn solve2(limit: u64) -> u64 {
+fn solve2(limit: u64) -> u64 {
     let (mut a, mut b) = (1u64, 2u64);
     let mut sum = 0;
     while a <= limit {
@@ -52,11 +40,7 @@ pub fn solve2(limit: u64) -> u64 {
     sum
 }
 
-/// Math: use the even-only recurrence E(n) = 4·E(n-1) + E(n-2).
-///
-/// - Time: $O(\log \text{limit})$
-/// - Space: $O(1)$
-pub fn solve(limit: u64) -> u64 {
+fn solve(limit: u64) -> u64 {
     let (mut a, mut b) = (2u64, 8u64);
     let mut sum = 0;
     while a <= limit {
