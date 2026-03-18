@@ -24,7 +24,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Build documentation
-        run: RUSTDOCFLAGS="--html-in-header katex-header.html" cargo doc --no-deps
+        run: RUSTDOCFLAGS="--html-in-header katex-header.html" cargo doc --no-deps --document-private-items
 
       - name: Add index redirect
         run: echo '<meta http-equiv="refresh" content="0; url=pe/index.html">' > target/doc/index.html
