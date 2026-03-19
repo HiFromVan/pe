@@ -8,6 +8,7 @@
 |---|------|------|
 | [1](problems/001-050/001.rs) | Multiples of 3 or 5 | ⭐ |
 | [2](problems/001-050/002.rs) | Even Fibonacci Numbers | ⭐ |
+| [3](problems/001-050/003.rs) | Largest Prime Factor | ⭐ |
 
 ---
 
