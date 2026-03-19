@@ -20,7 +20,28 @@
 //! - Space: $O(?)$
 
 fn solve() -> u64 {
-    todo!()
+    let mut max_palindrome = 0u64;
+    for i in (100u64..=999).rev() {
+        if i * 999 < max_palindrome {
+            break;
+        }
+        for j in (100u64..=999).rev() {
+            let product = i * j;
+            if product < max_palindrome {
+                break;
+            }
+            if is_palindrome(product) {
+                max_palindrome = product;
+                break;
+            }
+        }
+    }
+    max_palindrome
+}
+
+fn is_palindrome(n: u64) -> bool {
+    let s = n.to_string();
+    s == s.chars().rev().collect::<String>()
 }
 
 fn main() {
