@@ -11,11 +11,12 @@
 //!
 //! ## Mathematical Solution
 //!
-//! 从 2 开始试除，每次找到因数就一直除干净，再继续下一个数。
-//! 由于合数的所有质因数都已被提前除掉，能整除 $n$ 的必然是质数。
+//! Trial division starting from 2. For each factor found, divide it out completely
+//! before moving on — so any number that divides $n$ at this point must be prime
+//! (all its smaller prime factors have already been removed).
 //!
-//! 只需试到 $\sqrt{n}$：若 $n$ 还有因数，其中必有一个 $\leq \sqrt{n}$。
-//! 循环结束后若 $n > 1$，则剩余的 $n$ 本身是最大质因数。
+//! Only trial up to $\sqrt{n}$: if $n$ still has a factor, at least one must be
+//! $\leq \sqrt{n}$. If $n > 1$ after the loop, the remainder is itself the largest prime factor.
 //!
 //! ## Complexity
 //!
