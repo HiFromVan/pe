@@ -22,6 +22,10 @@ path = "problems/001-050/003.rs"
 name = "004"
 path = "problems/001-050/004.rs"
 
+[[bin]]
+name = "005"
+path = "problems/001-050/005.rs"
+
 [package.metadata.docs.rs]
 rustdoc-args = ["--html-in-header", "katex-header.html"]
 
