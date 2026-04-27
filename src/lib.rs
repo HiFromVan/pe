@@ -57,4 +57,75 @@ pub mod math {
     pub fn lcm(a: u64, b: u64) -> u64 {
         a * b / gcd(a, b)
     }
+
+    /// Arithmetic series sum: a + (a+d) + (a+2d) + ... (n terms)
+    /// = n/2 * (2a + (n-1)d)
+    pub fn arithmetic_series_sum(a: i64, d: i64, n: u64) -> i64 {
+        let n = n as i64;
+        n * (2 * a + (n - 1) * d) / 2
+    }
+
+    /// Bernoulli numbers B_0..=B_max as exact fractions (numerator, denominator).
+    /// Uses the recurrence: sum_{k=0}^{m} C(m+1,k) * B_k = 0  (m >= 1), B_0 = 1.
+    fn bernoulli_numbers(max: usize) -> Vec<(i64, i64)> {
+        // Store as (num, den) in lowest terms
+        let mut b: Vec<(i64, i64)> = vec![(0, 1); max + 1];
+        b[0] = (1, 1);
+
+        for m in 1..=max {
+            // B_m = -1/(m+1) * sum_{k=0}^{m-1} C(m+1, k) * B_k
+            let mut num: i64 = 0;
+            let mut den: i64 = 1;
+            let mut c = 1i64; // C(m+1, k)
+            for k in 0..m {
+                // accumulate C(m+1,k) * B_k into num/den
+                let (bn, bd) = b[k];
+                // add c * bn/bd to num/den
+                let new_num = num * bd + c * bn * den;
+                let new_den = den * bd;
+                let g = gcd(new_num.unsigned_abs(), new_den.unsigned_abs() as u64) as i64;
+                num = new_num / g;
+                den = new_den / g;
+                // update binomial coefficient: C(m+1,k+1) = C(m+1,k)*(m+1-k)/(k+1)
+                c = c * (m as i64 + 1 - k as i64) / (k as i64 + 1);
+            }
+            // B_m = -num / ((m+1) * den)
+            let result_num = -num;
+            let result_den = (m as i64 + 1) * den;
+            let g = gcd(result_num.unsigned_abs(), result_den.unsigned_abs() as u64) as i64;
+            b[m] = (result_num / g, result_den / g);
+        }
+        b
+    }
+
+    /// Sum of p-th powers: 1^p + 2^p + ... + n^p, using Bernoulli numbers.
+    /// Returns exact i64 result (assumes it fits).
+    pub fn power_sum(n: u64, p: usize) -> i64 {
+        // The Bernoulli formula computes sum_{k=0}^{m-1} k^p when passed m.
+        // To get sum_{k=1}^{n} k^p we pass m = n+1.
+        let m = n + 1;
+        // Formula: 1/(p+1) * sum_{j=0}^{p} C(p+1,j) * B_j * m^(p+1-j)
+        let b = bernoulli_numbers(p);
+        let mut num: i64 = 0;
+        let mut den: i64 = 1;
+        let mut c = 1i64; // C(p+1, j)
+        for j in 0..=p {
+            let (bj_n, bj_d) = b[j];
+            let n_pow = (m as i64).pow((p + 1 - j) as u32);
+            // term = c * bj_n/bj_d * n_pow
+            let term_num = c * bj_n * n_pow;
+            let term_den = bj_d;
+            let new_num = num * term_den + term_num * den;
+            let new_den = den * term_den;
+            let g = gcd(new_num.unsigned_abs(), new_den.unsigned_abs() as u64) as i64;
+            num = new_num / g;
+            den = new_den / g;
+            // C(p+1, j+1) = C(p+1,j) * (p+1-j) / (j+1)
+            if j < p {
+                c = c * (p as i64 + 1 - j as i64) / (j as i64 + 1);
+            }
+        }
+        // divide by (p+1)
+        num / ((p as i64 + 1) * den)
+    }
 }

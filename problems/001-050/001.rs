@@ -29,9 +29,12 @@
 //! - Time: $O(1)$
 //! - Space: $O(1)$
 
+use pe::math::arithmetic_series_sum;
+
 fn sum_multiples(k: u64, limit: u64) -> u64 {
     let n = limit / k;
-    k * n * (n + 1) / 2
+    // k + 2k + ... + nk = k * arithmetic_series_sum(1,1,n)
+    k * arithmetic_series_sum(1, 1, n) as u64
 }
 
 fn solve(limit: u64) -> u64 {
