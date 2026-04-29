@@ -53,10 +53,13 @@ fn solve() -> u64 {
         .split(|&d| d == 0)
         .filter(|s| s.len() >= 13)
         .map(|s| {
-            s.windows(13)
-             .map(|w| w.iter().product())
-             .max()
-             .unwrap()
+            let mut product: u64 = s[..13].iter().product();
+            let mut max = product;
+            for i in 13..s.len() {
+                product = product / s[i - 13] * s[i];
+                if product > max { max = product; }
+            }
+            max
         })
         .max()
         .unwrap_or(0)
