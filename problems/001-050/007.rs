@@ -23,7 +23,7 @@
 //! - `solve`:  Time $O(n \sqrt{n})$, Space $O(1)$
 //! - `solve1`: Time $O(m \log \log m)$, Space $O(m)$，其中 $m \approx n \ln n$
 
-use pe::math::is_prime;
+use pe::math::{is_prime, sieve_of_eratosthenes};
 
 #[allow(dead_code)]
 fn solve() -> u64 {
@@ -37,23 +37,8 @@ fn solve1() -> u64 {
     let ln_n = (n as f64).ln();
     let limit = (n as f64 * (ln_n + ln_n.ln())).ceil() as usize + 10;
 
-    // 埃式筛
-    let mut is_prime = vec![true; limit + 1];
-    is_prime[0] = false;
-    is_prime[1] = false;
-    let mut i = 2;
-    while i * i <= limit {
-        if is_prime[i] {
-            let mut j = i * i;
-            while j <= limit {
-                is_prime[j] = false;
-                j += i;
-            }
-        }
-        i += 1;
-    }
-
-    is_prime.iter().enumerate()
+    sieve_of_eratosthenes(limit)
+        .iter().enumerate()
         .filter(|&(_, &p)| p)
         .map(|(i, _)| i as u64)
         .nth(n - 1)

@@ -43,6 +43,28 @@ pub mod math {
         true
     }
 
+    /// Sieve of Eratosthenes: returns a boolean vec where index i is true if i is prime.
+    /// `sieve[0]` and `sieve[1]` are false; valid for indices 0..=limit.
+    pub fn sieve_of_eratosthenes(limit: usize) -> Vec<bool> {
+        let mut is_prime = vec![true; limit + 1];
+        is_prime[0] = false;
+        if limit > 0 {
+            is_prime[1] = false;
+        }
+        let mut i = 2;
+        while i * i <= limit {
+            if is_prime[i] {
+                let mut j = i * i;
+                while j <= limit {
+                    is_prime[j] = false;
+                    j += i;
+                }
+            }
+            i += 1;
+        }
+        is_prime
+    }
+
     /// Calculate greatest common divisor using Euclidean algorithm
     pub fn gcd(mut a: u64, mut b: u64) -> u64 {
         while b != 0 {
